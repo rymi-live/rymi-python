@@ -70,5 +70,13 @@ class CallsResource:
     def reprocess(self, call_id: str) -> Dict[str, Any]:
         return self.client.post(f"/calls/{call_id}/reprocess")
 
+    def end(self, call_id: str) -> Dict[str, Any]:
+        """End an in-progress call."""
+        return self.client.post(f"/calls/{call_id}/end")
+
+    def add_participants(self, call_id: str, participants: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Add one or more participants to a live call (warm transfer / conference)."""
+        return self.client.post(f"/calls/{call_id}/participants", json={"participants": participants})
+
     def queue_stats(self) -> Dict[str, Any]:
         return self.client.get("/calls/queue/stats")

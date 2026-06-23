@@ -2,7 +2,7 @@
 
 The official Python wrapper for the Rymi Voice AI REST API. Manage agents (incl. multi-language and model-stack config), phone numbers, calls, knowledge sources, evaluations, usage, and templates, plus webhook verification.
 
-Resources: `agents` · `calls` · `numbers` · `telephony` · `keys` · `billing` · `templates` · `webhooks`.
+Resources: `agents` · `calls` · `numbers` · `telephony` · `keys` · `billing` · `templates` · `webhooks` · `dnc`.
 
 ## Installation
 
@@ -26,3 +26,13 @@ agents = client.agents.list()
 for agent in agents["agents"]:
     print(agent['name'])
 ```
+
+## Documentation
+
+Full reference: [docs.rymi.live/api/sdk-python](https://docs.rymi.live/api/sdk-python)
+
+PyPI: [pypi.org/project/rymi](https://pypi.org/project/rymi/)
+
+## License
+
+MIT

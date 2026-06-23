@@ -3,6 +3,15 @@ import requests
 from typing import Any, Dict, Optional
 from urllib.parse import urlparse
 
+try:
+    from importlib.metadata import version as _pkg_version, PackageNotFoundError
+    try:
+        __version__ = _pkg_version("rymi")
+    except PackageNotFoundError:
+        __version__ = "0.0.0"
+except ImportError:  # Python < 3.8 fallback
+    __version__ = "0.0.0"
+
 class RymiError(Exception):
     """Custom exception raised for Rymi API Errors."""
     def __init__(self, message: str, status: Optional[int] = None, code: Optional[str] = None):
@@ -27,7 +36,7 @@ class RymiClient:
         self.session.headers.update({
             "Authorization": f"Bearer {self.api_key}",
             "Accept": "application/json",
-            "User-Agent": "rymi-python/1.0.0"
+            "User-Agent": f"rymi-python/{__version__}"
         })
 
     def request(self, method: str, path: str, json: Optional[Dict[str, Any]] = None, params: Optional[Dict[str, Any]] = None) -> Any:
@@ -71,6 +80,9 @@ class RymiClient:
 
     def put(self, path: str, json: Optional[Dict[str, Any]] = None) -> Any:
         return self.request("PUT", path, json=json)
-        
+
+    def patch(self, path: str, json: Optional[Dict[str, Any]] = None) -> Any:
+        return self.request("PATCH", path, json=json)
+
     def delete(self, path: str) -> Any:
         return self.request("DELETE", path)

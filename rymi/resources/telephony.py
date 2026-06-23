@@ -1,11 +1,12 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from rymi.client import RymiClient
 
 class TelephonyResource:
-    """Inspect the connected telephony carrier.
+    """Inspect and manage the connected telephony carrier.
 
-    Connecting/disconnecting a carrier requires carrier credentials and changes a
-    standing integration, so it is a dashboard action and not exposed here.
+    Most teams connect a carrier once from the dashboard; ``connect`` /
+    ``disconnect`` exist for programmatic provisioning and require carrier
+    credentials.
     """
 
     def __init__(self, client: RymiClient):
@@ -18,3 +19,29 @@ class TelephonyResource:
     def numbers(self) -> Dict[str, Any]:
         """List numbers available on the connected telephony carrier account."""
         return self.client.get("/telephony/numbers")
+
+    def connect(
+        self,
+        provider: str,
+        auth_id: Optional[str] = None,
+        auth_token: Optional[str] = None,
+        api_key: Optional[str] = None,
+        api_secret: Optional[str] = None,
+        signature_secret: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Connect a telephony carrier. Requires that carrier's credentials."""
+        payload: Dict[str, Any] = {"provider": provider}
+        for key, value in (
+            ("auth_id", auth_id),
+            ("auth_token", auth_token),
+            ("api_key", api_key),
+            ("api_secret", api_secret),
+            ("signature_secret", signature_secret),
+        ):
+            if value is not None:
+                payload[key] = value
+        return self.client.post("/telephony/connect", json=payload)
+
+    def disconnect(self) -> Dict[str, Any]:
+        """Disconnect the currently connected carrier."""
+        return self.client.post("/telephony/disconnect")

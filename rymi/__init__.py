@@ -7,7 +7,8 @@ from .resources.telephony import TelephonyResource
 from .resources.keys import KeysResource
 from .resources.billing import BillingResource
 from .resources.templates import TemplatesResource
-from .resources.webhooks import WebhooksUtility
+from .resources.webhooks import WebhooksResource
+from .resources.dnc import DncResource
 
 class Rymi:
     """The official Python SDK for the Rymi Voice API."""
@@ -22,6 +23,7 @@ class Rymi:
         self.keys = KeysResource(self._client)
         self.billing = BillingResource(self._client)
         self.templates = TemplatesResource(self._client)
-        self.webhooks = WebhooksUtility()
+        self.webhooks = WebhooksResource(self._client)
+        self.dnc = DncResource(self._client)
 
 __all__ = ["Rymi", "RymiError"]
