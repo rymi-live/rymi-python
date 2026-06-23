@@ -1,0 +1,11 @@
+name: Feature request
+description: Request a Python SDK improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: What should be added?
+      description: Describe the API or workflow you need.
+    validations:
+      required: true

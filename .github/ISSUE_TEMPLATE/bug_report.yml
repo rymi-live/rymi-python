@@ -1,0 +1,11 @@
+name: Bug report
+description: Something is not working
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include package version, Python version, and a minimal repro.
+    validations:
+      required: true
