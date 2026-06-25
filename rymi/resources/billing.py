@@ -19,13 +19,25 @@ class BillingResource:
 
     def estimate(
         self,
-        tier: Optional[str] = None,
+        stt_model: Optional[str] = None,
+        llm_model: Optional[str] = None,
+        tts_model: Optional[str] = None,
         duration_seconds: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """Estimate a call's cost for a role tier and duration before dialing."""
+        """Estimate a custom stack's cost before dialing.
+
+        Returns the per-minute rate (component cost + the flat $0.02/min platform
+        fee) and, when ``duration_seconds`` is given, the estimated cost for that
+        duration. Managed agents are priced by their SKU's fixed ``price_per_min``
+        (see ``GET /v1/managed-skus``) and don't need an estimate.
+        """
         payload: Dict[str, Any] = {}
-        if tier is not None:
-            payload["tier"] = tier
+        if stt_model is not None:
+            payload["stt_model"] = stt_model
+        if llm_model is not None:
+            payload["llm_model"] = llm_model
+        if tts_model is not None:
+            payload["tts_model"] = tts_model
         if duration_seconds is not None:
             payload["duration_seconds"] = duration_seconds
         return self.client.post("/billing/estimate", json=payload)

@@ -94,16 +94,12 @@ class AgentsResource:
     def preview_stack(
         self,
         supported_languages: List[str],
-        agent_role: Optional[str] = None,
         language: Optional[str] = None,
         current_provider_config: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Resolve the per-language model stack (STT/LLM/TTS), blockers, warnings, and
-        required role upgrades without saving. The concierge (realtime) role is not
-        supported by this endpoint."""
+        """Resolve the model stack (STT/LLM/TTS), blockers, and warnings for a set of
+        supported languages without saving."""
         payload: Dict[str, Any] = {"supported_languages": supported_languages}
-        if agent_role:
-            payload["agent_role"] = agent_role
         if language is not None:
             payload["language"] = language
         if current_provider_config is not None:

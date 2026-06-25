@@ -95,7 +95,7 @@ def test_extended_resource_surface(rymi_client):
         (responses.POST,   f"{API}/calls/abc/participants", lambda c: c.calls.add_participants("abc", [{"transport": "pstn", "identity": "+1"}])),
         (responses.POST,   f"{API}/keys/publishable",       lambda c: c.keys.create_publishable(agent_id="ag1", label="x")),
         (responses.DELETE, f"{API}/keys/publishable/k1",    lambda c: c.keys.revoke_publishable("k1")),
-        (responses.POST,   f"{API}/billing/estimate",       lambda c: c.billing.estimate(tier="operator")),
+        (responses.POST,   f"{API}/billing/estimate",       lambda c: c.billing.estimate(llm_model="gemini-2.5-flash", duration_seconds=300)),
         (responses.PUT,    f"{API}/billing/auto-recharge",  lambda c: c.billing.set_auto_recharge(enabled=True)),
         (responses.PUT,    f"{API}/billing/alerts",         lambda c: c.billing.set_alerts(low_balance_pct=15)),
         (responses.POST,   f"{API}/telephony/connect",      lambda c: c.telephony.connect(provider="twilio", auth_id="AC")),
