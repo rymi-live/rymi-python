@@ -50,8 +50,20 @@ class CallsResource:
             
         return self.client.post("/calls", json=payload)
 
+    def fanout(self, agent_id: str, to: List[str], from_number: Optional[str] = None, **kwargs: Any) -> Dict[str, Any]:
+        """Group call fanout: dial up to 500 PSTN participants into a single call room.
+
+        Every recipient joins the same call. For independent per-recipient attempts,
+        retries, and reports, use ``campaigns`` instead.
+        """
+        payload = {"agent_id": agent_id, "to": to}
+        if from_number:
+            payload["from_number"] = from_number
+        payload.update(kwargs)
+        return self.client.post("/calls/fanout", json=payload)
+
     def batch(self, agent_id: str, to: List[str], from_number: Optional[str] = None, **kwargs: Any) -> Dict[str, Any]:
-        """Queue a batch of outbound PSTN recipients."""
+        """Compatibility alias for :meth:`fanout`. Creates one call room with multiple PSTN participants."""
         payload = {"agent_id": agent_id, "to": to}
         if from_number:
             payload["from_number"] = from_number
