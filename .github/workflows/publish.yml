@@ -18,6 +18,18 @@ jobs:
         with:
           python-version: '3.10'
 
+      # The tag is the source of truth for the version. Stamp it into
+      # pyproject.toml before building so a stale in-repo version can never
+      # drift from the tag (which previously shipped rymi-1.2.0 under the
+      # rymi@1.3.0 tag and got rejected by PyPI as a duplicate).
+      - name: Stamp version from tag
+        run: |
+          set -euo pipefail
+          V="${GITHUB_REF_NAME#rymi@}"; V="${V#python-v}"
+          sed -i "s/^version = .*/version = \"$V\"/" pyproject.toml
+          grep -q "^version = \"$V\"$" pyproject.toml
+          echo "pyproject.toml -> $V"
+
       - name: Install build tools
         run: python -m pip install --upgrade pip build
 
