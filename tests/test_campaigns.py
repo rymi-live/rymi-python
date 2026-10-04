@@ -46,6 +46,19 @@ def test_campaigns_and_contacts_resource_surface(rymi_client):
         (responses.POST,   f"{API}/campaigns/cmp1/routes",                      lambda c: c.campaigns.routes.create("cmp1", phone_number="+15551234567")),
         (responses.PATCH,  f"{API}/campaigns/cmp1/routes/rt1",                  lambda c: c.campaigns.routes.update("cmp1", "rt1", active=False)),
         (responses.DELETE, f"{API}/campaigns/cmp1/routes/rt1",                  lambda c: c.campaigns.routes.remove("cmp1", "rt1")),
+        # campaign lead-intake URL (nested)
+        (responses.GET,    f"{API}/campaigns/cmp1/intake",                      lambda c: c.campaigns.intake.get("cmp1")),
+        (responses.PUT,    f"{API}/campaigns/cmp1/intake",                      lambda c: c.campaigns.intake.set("cmp1", assume_voice_consent=True, default_country="IN")),
+        (responses.POST,   f"{API}/campaigns/cmp1/intake/rotate",               lambda c: c.campaigns.intake.rotate("cmp1")),
+        (responses.DELETE, f"{API}/campaigns/cmp1/intake",                      lambda c: c.campaigns.intake.disable("cmp1")),
+        # agent public share link
+        (responses.GET,    f"{API}/agents/ag1/testers",                         lambda c: c.agents.get_share_link("ag1")),
+        (responses.PUT,    f"{API}/agents/ag1/share-link",                      lambda c: c.agents.set_share_link("ag1", minutes_limit=120)),
+        (responses.POST,   f"{API}/agents/ag1/share-link/regenerate",           lambda c: c.agents.regenerate_share_link("ag1")),
+        # API-tool secrets
+        (responses.GET,    f"{API}/tool-secrets",                               lambda c: c.tool_secrets.list()),
+        (responses.PUT,    f"{API}/tool-secrets/RESERVATIONS_KEY",              lambda c: c.tool_secrets.set("RESERVATIONS_KEY", value="sk_x", host="api.example.com")),
+        (responses.DELETE, f"{API}/tool-secrets/RESERVATIONS_KEY",              lambda c: c.tool_secrets.delete("RESERVATIONS_KEY")),
         # contacts
         (responses.GET,    f"{API}/contacts",                                   lambda c: c.contacts.list()),
         (responses.POST,   f"{API}/contacts",                                   lambda c: c.contacts.create(phone="+15551234567")),

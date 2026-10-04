@@ -74,6 +74,39 @@ class CampaignRoutesResource:
         return self.client.delete(f"/campaigns/{campaign_id}/routes/{route_id}")
 
 
+class CampaignIntakeResource:
+    """A campaign's lead-intake URL: lead sources POST contacts to it without an API key."""
+
+    def __init__(self, client: RymiClient):
+        self.client = client
+
+    def get(self, campaign_id: str) -> Dict[str, Any]:
+        """Get the intake settings, or ``{"intake": None}`` if the campaign has none."""
+        return self.client.get(f"/campaigns/{campaign_id}/intake")
+
+    def set(
+        self,
+        campaign_id: str,
+        assume_voice_consent: Optional[bool] = None,
+        default_country: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Create the intake URL (returned once as ``url``) or update its settings (``url`` is None)."""
+        payload: Dict[str, Any] = {}
+        if assume_voice_consent is not None:
+            payload["assume_voice_consent"] = assume_voice_consent
+        if default_country is not None:
+            payload["default_country"] = default_country
+        return self.client.put(f"/campaigns/{campaign_id}/intake", json=payload)
+
+    def rotate(self, campaign_id: str) -> Dict[str, Any]:
+        """Issue a new URL. The old one stops accepting leads immediately."""
+        return self.client.post(f"/campaigns/{campaign_id}/intake/rotate", json={})
+
+    def disable(self, campaign_id: str) -> Any:
+        """Remove the intake URL."""
+        return self.client.delete(f"/campaigns/{campaign_id}/intake")
+
+
 class CampaignsResource:
     """Manage outbound/inbound calling campaigns."""
 
@@ -81,6 +114,7 @@ class CampaignsResource:
         self.client = client
         self.members = CampaignMembersResource(client)
         self.routes = CampaignRoutesResource(client)
+        self.intake = CampaignIntakeResource(client)
 
     def list(self, **params: Any) -> Dict[str, Any]:
         """List campaigns for the authenticated tenant, paginated."""

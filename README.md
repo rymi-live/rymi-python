@@ -69,6 +69,10 @@ The client exposes one namespace per resource group:
 | `templates` | Prebuilt agent templates |
 | `webhooks` | Create webhooks and verify incoming signatures |
 | `dnc` | Do-not-call list management |
+| `campaigns` | Outbound/inbound calling campaigns: members, launch/pause, reports, improvement suggestions, inbound routes, and the lead-intake URL (`campaigns.intake`) |
+| `contacts` | Contacts and per-channel consent |
+| `compliance` | Compliance attestations (e.g. an external DNC scrub) |
+| `tool_secrets` | Secrets for API-tool headers, referenced as `{{secrets.NAME}}` |
 
 ## 📖 Documentation
 

@@ -153,3 +153,16 @@ class AgentsResource:
     def get_eval_run(self, agent_id: str, run_id: str) -> Dict[str, Any]:
         """Retrieve a single evaluation run, including per-scenario scores."""
         return self.client.get(f"/agents/{agent_id}/evals/runs/{run_id}")
+
+    def get_share_link(self, agent_id: str) -> Dict[str, Any]:
+        """Get the agent's public share link (``link`` is None if it has none)."""
+        res = self.client.get(f"/agents/{agent_id}/testers")
+        return {"link_feature": res.get("link_feature"), "link": res.get("link")}
+
+    def set_share_link(self, agent_id: str, **settings: Any) -> Dict[str, Any]:
+        """Create or update the public share link: enabled, minutes_limit, max_call_seconds, max_concurrent, calls_per_ip_hour."""
+        return self.client.put(f"/agents/{agent_id}/share-link", json=settings)
+
+    def regenerate_share_link(self, agent_id: str) -> Dict[str, Any]:
+        """Issue a new share URL. The old one stops working immediately."""
+        return self.client.post(f"/agents/{agent_id}/share-link/regenerate", json={})

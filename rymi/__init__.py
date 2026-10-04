@@ -12,6 +12,7 @@ from .resources.dnc import DncResource
 from .resources.campaigns import CampaignsResource
 from .resources.contacts import ContactsResource
 from .resources.compliance import ComplianceResource
+from .resources.tool_secrets import ToolSecretsResource
 
 class Rymi:
     """The official Python SDK for the Rymi Voice API."""
@@ -31,5 +32,6 @@ class Rymi:
         self.campaigns = CampaignsResource(self._client)
         self.contacts = ContactsResource(self._client)
         self.compliance = ComplianceResource(self._client)
+        self.tool_secrets = ToolSecretsResource(self._client)
 
 __all__ = ["Rymi", "RymiError"]
