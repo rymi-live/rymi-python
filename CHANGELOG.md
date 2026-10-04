@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.4.0
+
 - `campaigns.intake.get / set / rotate / disable` for a campaign's lead-intake URL.
 - `agents.get_share_link / set_share_link / regenerate_share_link` for an agent's public share link.
 - New `tool_secrets` resource (`list`, `set(name, value, host)`, `delete`) for API-tool header secrets referenced as `{{secrets.NAME}}`, matching the Node SDK.
