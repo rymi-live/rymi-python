@@ -44,6 +44,7 @@ def test_workspaces_resource():
     responses.add(responses.GET, f"{API}/workspaces/c1/members", json={"members": []})
     responses.add(responses.POST, f"{API}/workspaces/c1/members", json={"member": {}}, status=201)
     responses.add(responses.DELETE, f"{API}/workspaces/c1/members/u2", json={"ok": True})
+    responses.add(responses.DELETE, f"{API}/workspaces/c1", json={"ok": True})
 
     rymi = Rymi()
     rymi.workspaces.list()
@@ -53,6 +54,7 @@ def test_workspaces_resource():
     rymi.workspaces.list_members("c1")
     rymi.workspaces.add_member("c1", "guest@example.com")
     rymi.workspaces.remove_member("c1", "u2")
+    rymi.workspaces.delete("c1")
 
     sent = [(c.request.method, c.request.url, json.loads(c.request.body) if c.request.body else None) for c in responses.calls]
     assert sent == [
@@ -63,6 +65,7 @@ def test_workspaces_resource():
         ("GET", f"{API}/workspaces/c1/members", None),
         ("POST", f"{API}/workspaces/c1/members", {"email": "guest@example.com"}),
         ("DELETE", f"{API}/workspaces/c1/members/u2", None),
+        ("DELETE", f"{API}/workspaces/c1", None),
     ]
 
 

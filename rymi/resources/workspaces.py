@@ -26,6 +26,10 @@ class WorkspacesResource:
         """Fields: ``name``, ``operating_country``, ``spend_cap_cents_monthly`` (client workspaces; None removes the cap)."""
         return self.client.patch(f"/workspaces/{quote(workspace_id, safe='')}", json=fields)
 
+    def delete(self, workspace_id: str) -> Dict[str, Any]:
+        """Delete an empty workspace (no agents, numbers, calls, campaigns or client workspaces). Owner only; never your first workspace."""
+        return self.client.delete(f"/workspaces/{quote(workspace_id, safe='')}")
+
     def usage(self, workspace_id: str, month: Optional[str] = None) -> Dict[str, Any]:
         """Calls, minutes and credits for a month (YYYY-MM, UTC; default this month)."""
         params = {"month": month} if month else None
