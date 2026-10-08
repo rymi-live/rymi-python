@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.5.0
+
 - `Rymi(workspace=…)`, the `RYMI_WORKSPACE` environment variable, and `with_workspace(id)` send `Rymi-Workspace` on every request.
 - New `workspaces` resource: `list`, `create` (including `parent` for a client workspace), `update`, `usage`, `list_members`, `add_member`, `remove_member`.
 - Compliance settings: `compliance.get_settings`, `update_settings`, and `preview_settings`. `update_settings(operating_country=None)` clears the country.
