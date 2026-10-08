@@ -73,3 +73,7 @@ class BillingResource:
         if email_enabled is not None:
             payload["email_enabled"] = email_enabled
         return self.client.put("/billing/alerts", json=payload)
+
+    def set_country(self, billing_country: str) -> Dict[str, Any]:
+        """Set the billing country. Locked after the first paid invoice (409 billing_country_locked)."""
+        return self.client.put("/billing/country", json={"billing_country": billing_country})

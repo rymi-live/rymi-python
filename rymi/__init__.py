@@ -13,12 +13,14 @@ from .resources.campaigns import CampaignsResource
 from .resources.contacts import ContactsResource
 from .resources.compliance import ComplianceResource
 from .resources.tool_secrets import ToolSecretsResource
+from .resources.workspaces import WorkspacesResource
 
 class Rymi:
     """The official Python SDK for the Rymi Voice API."""
 
-    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None):
-        self._client = RymiClient(api_key=api_key, base_url=base_url)
+    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None, workspace: Optional[str] = None):
+        self._client = RymiClient(api_key=api_key, base_url=base_url, workspace=workspace)
+        self._options = {"api_key": api_key, "base_url": base_url}
 
         self.agents = AgentsResource(self._client)
         self.calls = CallsResource(self._client)
@@ -33,5 +35,10 @@ class Rymi:
         self.contacts = ContactsResource(self._client)
         self.compliance = ComplianceResource(self._client)
         self.tool_secrets = ToolSecretsResource(self._client)
+        self.workspaces = WorkspacesResource(self._client)
+
+    def with_workspace(self, workspace: str) -> "Rymi":
+        """The same client acting in another workspace: ``rymi.with_workspace(id).calls.create(...)``."""
+        return Rymi(api_key=self._client.api_key, base_url=self._options["base_url"], workspace=workspace)
 
 __all__ = ["Rymi", "RymiError"]

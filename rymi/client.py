@@ -22,7 +22,7 @@ class RymiError(Exception):
 class RymiClient:
     """Core HTTP Client for the Rymi API."""
     
-    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None, workspace: Optional[str] = None):
         self.api_key = api_key or os.environ.get("RYMI_API_KEY")
         if not self.api_key:
             raise ValueError(
@@ -38,6 +38,11 @@ class RymiClient:
             "Accept": "application/json",
             "User-Agent": f"rymi-python/{__version__}"
         })
+
+        # Act in this workspace (G0): sent as Rymi-Workspace on every request.
+        self.workspace = workspace or os.environ.get("RYMI_WORKSPACE") or None
+        if self.workspace:
+            self.session.headers["Rymi-Workspace"] = self.workspace
 
     def request(self, method: str, path: str, json: Optional[Dict[str, Any]] = None, params: Optional[Dict[str, Any]] = None) -> Any:
         url = f"{self.base_url}{path if path.startswith('/') else '/' + path}"

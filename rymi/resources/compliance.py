@@ -1,6 +1,9 @@
 from typing import Any, Dict, Optional
 from rymi.client import RymiClient
 
+# Tells "not passed" apart from None, which clears the operating country.
+_UNSET: Any = object()
+
 
 class ComplianceResource:
     """Record and list compliance attestations (append-only)."""
@@ -23,3 +26,21 @@ class ComplianceResource:
     def list_attestations(self) -> Dict[str, Any]:
         """List the tenant's 50 most recent compliance attestations, newest first."""
         return self.client.get("/compliance/attestations")
+
+    def get_settings(self) -> Dict[str, Any]:
+        """The workspace's compliance settings, with every country preset."""
+        return self.client.get("/compliance/settings")
+
+    def update_settings(self, operating_country: Any = _UNSET, rules: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Choosing ``operating_country`` fills every setting you haven't edited from its preset.
+        ``operating_country=None`` clears the country and leaves the rules in place."""
+        body: Dict[str, Any] = {}
+        if operating_country is not _UNSET:
+            body["operating_country"] = operating_country
+        if rules is not None:
+            body["rules"] = rules
+        return self.client.put("/compliance/settings", json=body)
+
+    def preview_settings(self, country: str) -> Dict[str, Any]:
+        """What choosing a country would change, before saving."""
+        return self.client.get("/compliance/settings/preview", params={"country": country})

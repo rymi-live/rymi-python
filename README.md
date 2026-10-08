@@ -65,13 +65,14 @@ The client exposes one namespace per resource group:
 | `numbers` | Register and attach phone numbers |
 | `telephony` | Inspect carrier status and provisioned numbers |
 | `keys` | Manage publishable keys |
-| `billing` | Usage summaries and balance |
+| `billing` | Usage summaries, balance, and `set_country` (billing country, locked after the first paid invoice) |
 | `templates` | Prebuilt agent templates |
 | `webhooks` | Create webhooks and verify incoming signatures |
 | `dnc` | Do-not-call list management |
 | `campaigns` | Outbound/inbound calling campaigns: members, launch/pause, reports, improvement suggestions, inbound routes, and the lead-intake URL (`campaigns.intake`) |
 | `contacts` | Contacts and per-channel consent |
-| `compliance` | Compliance attestations (e.g. an external DNC scrub) |
+| `compliance` | Attestations, plus workspace settings: `get_settings`, `update_settings`, `preview_settings` |
+| `workspaces` | List, create and update workspaces, including client workspaces (`create(name, parent=…)`). `usage`, `list_members`, `add_member`, `remove_member`. Pass `workspace` (or `RYMI_WORKSPACE`), or call `with_workspace(id)`. |
 | `tool_secrets` | Secrets for API-tool headers, referenced as `{{secrets.NAME}}` |
 
 ## 📖 Documentation
