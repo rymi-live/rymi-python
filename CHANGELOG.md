@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.6.0
+
 - `workspaces.delete(workspace_id)` deletes an empty workspace. Owner only, never your first workspace (`400` `cannot_delete_primary`); `409` `workspace_not_empty` lists the `blockers`.
 
 ## 1.5.0
