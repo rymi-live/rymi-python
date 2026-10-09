@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `workspaces.delete(workspace_id)` deletes an empty workspace. Owner only, never your first workspace (`400` `cannot_delete_primary`); `409` `workspace_not_empty` lists the `blockers`.
+
 ## 1.5.0
 
 - `Rymi(workspace=…)`, the `RYMI_WORKSPACE` environment variable, and `with_workspace(id)` send `Rymi-Workspace` on every request.
