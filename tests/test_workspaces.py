@@ -70,6 +70,13 @@ def test_workspaces_resource():
 
 
 @responses.activate
+def test_workspaces_create_in_account():
+    responses.add(responses.POST, f"{API}/workspaces", json={"workspace": {"id": "w9"}}, status=201)
+    Rymi().workspaces.create("Sarang", account="acct-1")
+    assert json.loads(responses.calls[0].request.body) == {"name": "Sarang", "account": "acct-1"}
+
+
+@responses.activate
 def test_compliance_settings_and_billing_country():
     responses.add(responses.GET, f"{API}/compliance/settings", json={"configured": False})
     responses.add(responses.PUT, f"{API}/compliance/settings", json={"configured": True})

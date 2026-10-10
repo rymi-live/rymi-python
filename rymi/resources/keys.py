@@ -12,6 +12,20 @@ class KeysResource:
     def __init__(self, client: RymiClient):
         self.client = client
 
+    def create(self, kind: str, scopes: List[str], label: Optional[str] = None) -> Dict[str, Any]:
+        """Create a secret key. ``kind`` is ``account`` or ``workspace``.
+
+        The full ``key`` is only returned by this call.
+        """
+        payload: Dict[str, Any] = {"kind": kind, "scopes": scopes}
+        if label is not None:
+            payload["label"] = label
+        return self.client.post("/auth/api-keys", json=payload)
+
+    def self(self) -> Dict[str, Any]:
+        """Kind, scopes, and legacy flag for the key authenticating this client."""
+        return self.client.get("/keys/self")
+
     def list_publishable(self) -> Dict[str, Any]:
         """List publishable keys and their agent/channel scoping. Returns key prefixes only, never full secrets."""
         return self.client.get("/keys/publishable")

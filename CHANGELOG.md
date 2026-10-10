@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **Breaking:** a workspace's `role` and a workspace member's `role` are no longer `owner`. Workspace roles are `admin`, `editor`, `client` and `viewer`; a workspace's `role` is `None` for a Billing member with no workspace role.
+- **Breaking:** `billing.set_auto_recharge`, `set_alerts` and `set_country` return `403` for every API key. Top up and change billing in Studio.
+- Accounts and scoped keys: `accounts.list`, `get`, `update`, `list_members`, `add_member`, `update_member`, `remove_member`, and `workspaces`; `keys.create(kind=, scopes=, label=)` and `keys.self()`.
+- `workspaces.create(name, account=...)` creates the workspace in that account. `accounts.update_member` returns `{"member": {"user_id", "role"}}`, with no `email`.
+
 ## 1.6.0
 
 - `workspaces.delete(workspace_id)` deletes an empty workspace. Owner only, never your first workspace (`400` `cannot_delete_primary`); `409` `workspace_not_empty` lists the `blockers`.
