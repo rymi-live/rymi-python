@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.7.1
+
+- `calls.add_participants` documents adding one or more participants to a live call.
+
 ## 1.7.0
 
 - **Breaking:** a workspace's `role` and a workspace member's `role` are no longer `owner`. Workspace roles are `admin`, `editor`, `client` and `viewer`; a workspace's `role` is `None` for a Billing member with no workspace role.
