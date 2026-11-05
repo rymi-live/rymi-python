@@ -27,7 +27,8 @@ class CallsResource:
         variables: Optional[Dict[str, Any]] = None,
         post_call: Optional[Dict[str, Any]] = None,
         to: Optional[str] = None,
-        from_number: Optional[str] = None
+        from_number: Optional[str] = None,
+        test: bool = False,
     ) -> Dict[str, Any]:
         """Create a WebRTC/PSTN call using the participant-first API."""
         if participants is None and to:
@@ -41,7 +42,13 @@ class CallsResource:
             "agent_id": agent_id,
             "participants": participants or []
         }
-        if metadata:
+        if test:
+            marked = dict(metadata or {})
+            marked["source"] = "mcp_test"
+            payload["metadata"] = marked
+            payload["test"] = True
+            payload["use_test_pool"] = True
+        elif metadata:
             payload["metadata"] = metadata
         if variables:
             payload["variables"] = variables
