@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.8.0
+
+- `calls.create` takes `test=True`. Rymi stores the call as a test (`metadata.source` `mcp_test`), caps it at 5 minutes, and dials from the shared test number when you omit `from_number`. The destination must be a number you confirmed on WhatsApp. Publishable keys cannot use it.
+
 ## 1.7.1
 
 - `calls.add_participants` documents adding one or more participants to a live call.
