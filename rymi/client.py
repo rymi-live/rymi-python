@@ -65,7 +65,8 @@ class RymiClient:
                 code = None
                 
                 if isinstance(data, dict):
-                    message = data.get("error", message)
+                    # Prefer the human message. `error` is often just the HTTP reason.
+                    message = data.get("message") or data.get("error") or message
                     code = data.get("code")
                 elif isinstance(data, str) and data:
                     message = data

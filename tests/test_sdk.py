@@ -46,6 +46,45 @@ def test_client_error_handling(rymi_client):
     assert exc_info.value.status == 404
     assert exc_info.value.code == "not_found"
 
+@responses.activate
+def test_client_error_prefers_message(rymi_client):
+    responses.add(
+        responses.POST,
+        "https://api.rymi.live/v1/phone-confirmation/start",
+        json={
+            "error": "Conflict",
+            "code": "in_progress",
+            "message": "Someone is already confirming this number. Try again in 10 minutes.",
+        },
+        status=409,
+    )
+    with pytest.raises(RymiError) as exc_info:
+        rymi_client.phone_confirmation.start("+919876543210")
+    assert "already confirming" in str(exc_info.value)
+    assert exc_info.value.code == "in_progress"
+    assert exc_info.value.status == 409
+
+@responses.activate
+def test_phone_confirmation_start_and_status(rymi_client):
+    responses.add(
+        responses.POST,
+        "https://api.rymi.live/v1/phone-confirmation/start",
+        json={"confirmed": False, "phone": "+919876543210", "wa_url": "https://wa.me/1", "message_text": "Confirm", "expires_in": 600},
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        "https://api.rymi.live/v1/phone-confirmation/status",
+        json={"confirmed": False},
+        status=200,
+    )
+    started = rymi_client.phone_confirmation.start("+919876543210")
+    assert started["confirmed"] is False
+    assert responses.calls[0].request.body == b'{"phone": "+919876543210"}'
+    status = rymi_client.phone_confirmation.status("+919876543210")
+    assert status == {"confirmed": False}
+    assert "phone=%2B919876543210" in responses.calls[1].request.url
+
 def test_webhook_signature_verification(rymi_client):
     secret = "whsec_test_secret"
     payload = json.dumps({"type": "call.ended", "call_id": "call_123"})

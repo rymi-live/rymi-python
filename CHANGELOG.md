@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- `phone_confirmation.start(phone)` and `phone_confirmation.status(phone)` start and check WhatsApp confirmation for a shared-test-line destination. `start` does not confirm the number.
+- API errors use the response `message` when the body has one, and `error` otherwise.
+
 ## 1.8.0
 
 - `calls.create` takes `test=True`. Rymi stores the call as a test (`metadata.source` `mcp_test`), caps it at 5 minutes, and dials from the shared test number when you omit `from_number`. The destination must be a number you confirmed on WhatsApp. Publishable keys cannot use it.

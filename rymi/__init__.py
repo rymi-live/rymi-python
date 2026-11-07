@@ -15,6 +15,7 @@ from .resources.compliance import ComplianceResource
 from .resources.tool_secrets import ToolSecretsResource
 from .resources.workspaces import WorkspacesResource
 from .resources.accounts import AccountsResource
+from .resources.phone_confirmation import PhoneConfirmationResource
 
 class Rymi:
     """The official Python SDK for the Rymi Voice API."""
@@ -38,6 +39,7 @@ class Rymi:
         self.tool_secrets = ToolSecretsResource(self._client)
         self.workspaces = WorkspacesResource(self._client)
         self.accounts = AccountsResource(self._client)
+        self.phone_confirmation = PhoneConfirmationResource(self._client)
 
     def with_workspace(self, workspace: str) -> "Rymi":
         """The same client acting in another workspace: ``rymi.with_workspace(id).calls.create(...)``."""
