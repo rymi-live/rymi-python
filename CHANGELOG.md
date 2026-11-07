@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.9.0
+
 - `phone_confirmation.start(phone)` and `phone_confirmation.status(phone)` start and check WhatsApp confirmation for a shared-test-line destination. `start` does not confirm the number.
 - API errors use the response `message` when the body has one, and `error` otherwise.
 
