@@ -62,7 +62,7 @@ The client exposes one namespace per resource group:
 |-----------|--------------|
 | `agents` | Create, update, clone, and configure voice agents |
 | `calls` | Place, list, and observe calls; fetch transcripts and recordings |
-| `phone_confirmation` | `start(phone)` and `status(phone)` for a shared-test-line destination. `start` returns the WhatsApp link. The phone confirms it by sending the message |
+| `phone_confirmation` | `start(phone)`, `request_code(phone)` and `status(phone)` for a shared-test-line destination. `start` returns the WhatsApp link. The phone confirms it by sending the message |
 | `numbers` | Register and attach phone numbers |
 | `telephony` | Inspect carrier status and provisioned numbers |
 | `keys` | Create a secret key (`create(kind, scopes, label)`, response field `key`) and read it (`self()`). Also manage publishable keys |

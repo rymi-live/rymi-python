@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `phone_confirmation.request_code(phone)` sends a WhatsApp code to a shared-test-line destination. `phone_confirmation.status` also reports a code that is waiting. A person types the code at `entry_url`; no secret key can submit one.
+
 ## 1.9.0
 
 - `phone_confirmation.start(phone)` and `phone_confirmation.status(phone)` start and check WhatsApp confirmation for a shared-test-line destination. `start` does not confirm the number.
