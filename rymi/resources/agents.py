@@ -106,6 +106,14 @@ class AgentsResource:
             payload["current_provider_config"] = current_provider_config
         return self.client.post("/agents/stack-preview", json=payload)
 
+    def pending_publish(self, agent_id: str) -> Dict[str, Any]:
+        """Get the latest held edit for an agent on a phone line from Rymi.
+
+        ``pending_publish`` is ``None`` when nothing is held; otherwise its ``status``
+        is ``pending``, ``approved``, ``rejected`` or ``stale``.
+        """
+        return self.client.get(f"/agents/{agent_id}/pending-publish")
+
     def list_knowledge_sources(self, agent_id: str) -> Dict[str, Any]:
         """List the knowledge sources (RAG context) attached to an agent."""
         return self.client.get(f"/agents/{agent_id}/knowledge-sources")

@@ -99,3 +99,28 @@ class ContactsResource:
         if method is not None:
             payload["method"] = method
         return self.client.patch(f"/contacts/{contact_id}/consent", json=payload)
+
+    def record_consent(
+        self,
+        phone: str,
+        source: str,
+        consent_text: str,
+        granted: Optional[bool] = None,
+        method: Optional[str] = None,
+        captured_at: Optional[str] = None,
+        name: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Record voice consent (or a revoke) by phone number, with the exact wording shown.
+
+        Creates the contact when none exists and appends a consent_events audit row.
+        """
+        payload: Dict[str, Any] = {"phone": phone, "source": source, "consent_text": consent_text}
+        for key, value in (
+            ("granted", granted),
+            ("method", method),
+            ("captured_at", captured_at),
+            ("name", name),
+        ):
+            if value is not None:
+                payload[key] = value
+        return self.client.post("/contacts/consent", json=payload)

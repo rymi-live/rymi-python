@@ -151,3 +151,25 @@ def test_extended_resource_surface(rymi_client):
         call(rymi_client)
         req = responses.calls[-1].request
         assert req.method == verb, f"{url}: expected {verb}, got {req.method}"
+
+@responses.activate
+def test_managed_line_methods(rymi_client):
+    base = "https://api.rymi.live/v1"
+    responses.add(responses.GET, f"{base}/telephony/line", json={"has_line": False, "line": None})
+    responses.add(responses.POST, f"{base}/telephony/line/request", json={"line_id": "ml-1"})
+    responses.add(responses.POST, f"{base}/telephony/line/accept-terms", json={"ok": True})
+    responses.add(responses.POST, f"{base}/telephony/line/kyc", json={"ok": True})
+    responses.add(responses.GET, f"{base}/agents/a-1/pending-publish", json={"pending_publish": None})
+    responses.add(responses.POST, f"{base}/contacts/consent", json={"contact_id": "c-1"})
+
+    assert rymi_client.telephony.line()["has_line"] is False
+    rymi_client.telephony.request_line("IN", handoff="whatsapp")
+    rymi_client.telephony.accept_line_terms()
+    rymi_client.telephony.submit_line_kyc(fields={"city": "Pune"}, submit=True)
+    rymi_client.agents.pending_publish("a-1")
+    rymi_client.contacts.record_consent("+919876543210", source="web_form", consent_text="I agree")
+
+    bodies = [json.loads(c.request.body) if c.request.body else None for c in responses.calls]
+    assert bodies[1] == {"country": "IN", "handoff": "whatsapp"}
+    assert bodies[3] == {"fields": {"city": "Pune"}, "submit": True}
+    assert bodies[5] == {"phone": "+919876543210", "source": "web_form", "consent_text": "I agree"}

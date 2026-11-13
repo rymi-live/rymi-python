@@ -60,18 +60,18 @@ The client exposes one namespace per resource group:
 
 | Namespace | What it does |
 |-----------|--------------|
-| `agents` | Create, update, clone, and configure voice agents |
+| `agents` | Create, update, clone, and configure voice agents; `pending_publish(id)` shows a held edit on a phone line from Rymi |
 | `calls` | Place, list, and observe calls; fetch transcripts and recordings |
 | `phone_confirmation` | `start(phone)`, `request_code(phone)` and `status(phone)` for a shared-test-line destination. `start` returns the WhatsApp link. The phone confirms it by sending the message |
 | `numbers` | Register and attach phone numbers |
-| `telephony` | Inspect carrier status and provisioned numbers |
+| `telephony` | Inspect carrier status and provisioned numbers; for a phone line from Rymi, `line()`, `request_line(country)`, `accept_line_terms()` and `submit_line_kyc(fields=, document=, submit=)` |
 | `keys` | Create a secret key (`create(kind, scopes, label)`, response field `key`) and read it (`self()`). Also manage publishable keys |
 | `billing` | Usage summaries, balance, and `set_country` (billing country, locked after the first paid invoice) |
 | `templates` | Prebuilt agent templates |
 | `webhooks` | Create webhooks and verify incoming signatures |
 | `dnc` | Do-not-call list management |
 | `campaigns` | Outbound/inbound calling campaigns: members, launch/pause, reports, improvement suggestions, inbound routes, and the lead-intake URL (`campaigns.intake`) |
-| `contacts` | Contacts and per-channel consent |
+| `contacts` | Contacts and per-channel consent; `record_consent(phone, source=, consent_text=)` records voice consent by phone number |
 | `compliance` | Attestations, plus workspace settings: `get_settings`, `update_settings`, `preview_settings` |
 | `accounts` | `list`, `get`, `update`, `list_members`, `add_member`, `update_member`, `remove_member`, `workspaces` (this month's calls, minutes, and credits) |
 | `workspaces` | List, create, update, and delete empty workspaces (`delete(id)`, account Owner; `cannot_delete_primary` for the primary). `usage`, `list_members`, `add_member` (`admin`, `editor`, `client`, `viewer`), `remove_member`. Pass `workspace` (or `RYMI_WORKSPACE`), or call `with_workspace(id)` |
