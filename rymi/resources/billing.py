@@ -77,3 +77,19 @@ class BillingResource:
     def set_country(self, billing_country: str) -> Dict[str, Any]:
         """Set the billing country. Locked after the first paid invoice (409 billing_country_locked)."""
         return self.client.put("/billing/country", json={"billing_country": billing_country})
+
+    def list_plans(self) -> Dict[str, Any]:
+        """Monthly plans on sale (Starter, Scale, Business). 404 until plans go on sale."""
+        return self.client.get("/billing/plans")
+
+    def get_plan(self) -> Dict[str, Any]:
+        """Current plan, credit buckets and, once plans are on sale, period end and discount."""
+        return self.client.get("/billing/plan")
+
+    def cancel_plan(self) -> Dict[str, Any]:
+        """Stop renewal. The plan and its discount last until the period ends."""
+        return self.client.post("/billing/plan/cancel", json={})
+
+    def downgrade_plan(self, plan_id: str) -> Dict[str, Any]:
+        """Switch to a cheaper plan (or ``free``) at the next renewal."""
+        return self.client.post("/billing/plan/downgrade", json={"plan_id": plan_id})
