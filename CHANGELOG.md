@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `rymi.bug_reports.create / list / retrieve`: report a bug and follow its review status (`pending_review` → `approved` → `fixed`).
+
 ## 1.12.0
 
 - `billing.list_plans()`, `billing.get_plan()`, `billing.cancel_plan()` and `billing.downgrade_plan(plan_id)` for monthly plans. `list_plans`, `cancel_plan` and `downgrade_plan` return 404 until monthly plans go on sale.

@@ -12,6 +12,7 @@ from .resources.dnc import DncResource
 from .resources.campaigns import CampaignsResource
 from .resources.contacts import ContactsResource
 from .resources.compliance import ComplianceResource
+from .resources.bug_reports import BugReportsResource
 from .resources.tool_secrets import ToolSecretsResource
 from .resources.workspaces import WorkspacesResource
 from .resources.accounts import AccountsResource
@@ -36,6 +37,7 @@ class Rymi:
         self.campaigns = CampaignsResource(self._client)
         self.contacts = ContactsResource(self._client)
         self.compliance = ComplianceResource(self._client)
+        self.bug_reports = BugReportsResource(self._client)
         self.tool_secrets = ToolSecretsResource(self._client)
         self.workspaces = WorkspacesResource(self._client)
         self.accounts = AccountsResource(self._client)

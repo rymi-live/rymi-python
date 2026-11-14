@@ -73,6 +73,7 @@ The client exposes one namespace per resource group:
 | `campaigns` | Outbound/inbound calling campaigns: members, launch/pause, reports, improvement suggestions, inbound routes, and the lead-intake URL (`campaigns.intake`) |
 | `contacts` | Contacts and per-channel consent; `record_consent(phone, source=, consent_text=)` records voice consent by phone number |
 | `compliance` | Attestations, plus workspace settings: `get_settings`, `update_settings`, `preview_settings` |
+| `bug_reports` | Report a bug and follow its review status: `create`, `list`, `retrieve` |
 | `accounts` | `list`, `get`, `update`, `list_members`, `add_member`, `update_member`, `remove_member`, `workspaces` (this month's calls, minutes, and credits) |
 | `workspaces` | List, create, update, and delete empty workspaces (`delete(id)`, account Owner; `cannot_delete_primary` for the primary). `usage`, `list_members`, `add_member` (`admin`, `editor`, `client`, `viewer`), `remove_member`. Pass `workspace` (or `RYMI_WORKSPACE`), or call `with_workspace(id)` |
 | `tool_secrets` | Secrets for API-tool headers, referenced as `{{secrets.NAME}}` |
