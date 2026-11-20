@@ -5,8 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rymi"
 version = "1.13.0"
-description = "The official Python REST API wrapper for Rymi."
+description = "Python SDK for Rymi: build AI voice agents and place outbound phone calls."
 readme = "README.md"
+keywords = ["voice-agent", "voice-ai", "phone-call", "telephony", "outbound-calls", "rymi"]
 authors = [
     { name = "Rymi AI", email = "engineering@rymi.live" }
 ]
@@ -27,7 +28,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://rymi.live"
+Homepage = "https://docs.rymi.live/api/sdk-python"
 Documentation = "https://docs.rymi.live/api/sdk-python"
 Source = "https://github.com/rymi-live/rymi-python"
 
