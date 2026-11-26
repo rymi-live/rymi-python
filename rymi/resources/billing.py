@@ -79,7 +79,7 @@ class BillingResource:
         return self.client.put("/billing/country", json={"billing_country": billing_country})
 
     def list_plans(self) -> Dict[str, Any]:
-        """Monthly plans on sale (Starter, Scale, Business). 404 until plans go on sale."""
+        """Monthly plans on sale (Solo, Team, Scale). 404 until plans go on sale."""
         return self.client.get("/billing/plans")
 
     def get_plan(self) -> Dict[str, Any]:

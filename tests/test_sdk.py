@@ -157,15 +157,15 @@ def test_monthly_plan_methods(rymi_client):
     responses.add(responses.GET, f"{API}/billing/plans", json={"plans": []})
     responses.add(responses.GET, f"{API}/billing/plan", json={"plan_id": "free"})
     responses.add(responses.POST, f"{API}/billing/plan/cancel", json={"ok": True})
-    responses.add(responses.POST, f"{API}/billing/plan/downgrade", json={"ok": True, "pending_plan_id": "starter"})
+    responses.add(responses.POST, f"{API}/billing/plan/downgrade", json={"ok": True, "pending_plan_id": "solo"})
 
     assert rymi_client.billing.list_plans() == {"plans": []}
     assert rymi_client.billing.get_plan()["plan_id"] == "free"
     rymi_client.billing.cancel_plan()
     assert responses.calls[-1].request.method == "POST"
-    out = rymi_client.billing.downgrade_plan("starter")
-    assert out["pending_plan_id"] == "starter"
-    assert json.loads(responses.calls[-1].request.body) == {"plan_id": "starter"}
+    out = rymi_client.billing.downgrade_plan("solo")
+    assert out["pending_plan_id"] == "solo"
+    assert json.loads(responses.calls[-1].request.body) == {"plan_id": "solo"}
 
 
 @responses.activate
