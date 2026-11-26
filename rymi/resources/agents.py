@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional
+from urllib.parse import quote
 from rymi.client import RymiClient
 
 class AgentsResource:
@@ -74,6 +75,20 @@ class AgentsResource:
             payload["agent_id"] = agent_id
         payload.update(kwargs)
         return self.client.post("/agents/validate-publish", json=payload)
+
+    def publish(self, agent_id: str, environment: Optional[str] = None, label: Optional[str] = None) -> Dict[str, Any]:
+        """Validate the saved draft and make it the live version.
+
+        Returns HTTP 200 with ``published=False`` and ``blockers`` when the agent isn't
+        ready, so check ``blockers`` rather than waiting for an exception.
+        ``environment`` is ``"production"`` (default) or ``"staging"``.
+        """
+        payload: Dict[str, Any] = {}
+        if environment:
+            payload["environment"] = environment
+        if label is not None:
+            payload["label"] = label
+        return self.client.post(f"/agents/{quote(agent_id, safe='')}/publish", json=payload)
 
     def apply_changes(self, current_config: Dict[str, Any], changes: list, mode: str = "edit", lenient: bool = False) -> Dict[str, Any]:
         """Validate and resolve a flat key/value change-set. Does NOT persist — follow up with update()."""

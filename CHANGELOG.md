@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## 1.14.0
+
+- `rymi.agents.publish(agent_id, environment=None, label=None)`: validate the saved draft and make it live (`POST /v1/agents/:id/publish`). Returns `published=False` with `blockers` when the agent isn't ready.
 - `contacts.get / update / delete` and the consent call quote the contact id in the path, so an id like `../agents/<id>` can no longer re-target the request.
 
 ## 1.13.0

@@ -189,3 +189,17 @@ def test_managed_line_methods(rymi_client):
     assert bodies[1] == {"country": "IN", "handoff": "whatsapp"}
     assert bodies[3] == {"fields": {"city": "Pune"}, "submit": True}
     assert bodies[5] == {"phone": "+919876543210", "source": "web_form", "consent_text": "I agree"}
+
+
+@responses.activate
+def test_agents_publish(rymi_client):
+    base = "https://api.rymi.live/v1"
+    responses.add(responses.POST, f"{base}/agents/a-1/publish", json={"published": True})
+    responses.add(responses.POST, f"{base}/agents/a%2F2/publish", json={"published": False, "blockers": []})
+
+    assert rymi_client.agents.publish("a-1")["published"] is True
+    rymi_client.agents.publish("a/2", environment="staging", label="v2")
+
+    bodies = [json.loads(c.request.body) for c in responses.calls]
+    assert bodies[0] == {}
+    assert bodies[1] == {"environment": "staging", "label": "v2"}

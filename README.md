@@ -60,7 +60,7 @@ The client exposes one namespace per resource group:
 
 | Namespace | What it does |
 |-----------|--------------|
-| `agents` | Create, update, clone, and configure voice agents; `pending_publish(id)` shows a held edit on a phone line from Rymi |
+| `agents` | Create, update, clone, publish, and configure voice agents; `pending_publish(id)` shows a held edit on a phone line from Rymi |
 | `calls` | Place, list, and observe calls; fetch transcripts and recordings |
 | `phone_confirmation` | `start(phone)`, `request_code(phone)` and `status(phone)` for a shared-test-line destination. `start` returns the WhatsApp link. The phone confirms it by sending the message |
 | `numbers` | Register and attach phone numbers |
