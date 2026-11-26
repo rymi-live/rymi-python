@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `contacts.get / update / delete` and the consent call quote the contact id in the path, so an id like `../agents/<id>` can no longer re-target the request.
+
 ## 1.13.0
 
 - `rymi.bug_reports.create / list / retrieve`: report a bug and follow its review status (`pending_review` → `approved` → `fixed`).

@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional
+from urllib.parse import quote
 from rymi.client import RymiClient
 
 
@@ -53,15 +54,15 @@ class ContactsResource:
 
     def retrieve(self, contact_id: str) -> Dict[str, Any]:
         """Retrieve a single tenant-scoped contact by id."""
-        return self.client.get(f"/contacts/{contact_id}")
+        return self.client.get(f"/contacts/{quote(contact_id, safe='')}")
 
     def update(self, contact_id: str, **fields: Any) -> Dict[str, Any]:
         """Update an existing tenant-scoped contact. Only provided fields change."""
-        return self.client.patch(f"/contacts/{contact_id}", json=fields)
+        return self.client.patch(f"/contacts/{quote(contact_id, safe='')}", json=fields)
 
     def delete(self, contact_id: str) -> Dict[str, Any]:
         """Delete a tenant-scoped contact."""
-        return self.client.delete(f"/contacts/{contact_id}")
+        return self.client.delete(f"/contacts/{quote(contact_id, safe='')}")
 
     def import_(
         self,
@@ -98,7 +99,7 @@ class ContactsResource:
             payload["source"] = source
         if method is not None:
             payload["method"] = method
-        return self.client.patch(f"/contacts/{contact_id}/consent", json=payload)
+        return self.client.patch(f"/contacts/{quote(contact_id, safe='')}/consent", json=payload)
 
     def record_consent(
         self,
