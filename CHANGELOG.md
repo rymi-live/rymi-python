@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `rymi.telephony.activate_line(agent_id)` buys your Rymi line's number, attaches it to a published agent and charges the first month from credits.
+
 ## 1.14.0
 
 - `rymi.agents.publish(agent_id, environment=None, label=None)`: validate the saved draft and make it live (`POST /v1/agents/:id/publish`). Returns `published=False` with `blockers` when the agent isn't ready.

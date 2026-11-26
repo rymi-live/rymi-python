@@ -192,6 +192,15 @@ def test_managed_line_methods(rymi_client):
 
 
 @responses.activate
+def test_activate_line(rymi_client):
+    base = "https://api.rymi.live/v1"
+    responses.add(responses.POST, f"{base}/telephony/line/activate", json={"waiting_for_kyc": True}, status=202)
+    out = rymi_client.telephony.activate_line("a-1", replace_carrier=True)
+    assert out == {"waiting_for_kyc": True}
+    assert json.loads(responses.calls[-1].request.body) == {"agent_id": "a-1", "replace_carrier": True}
+
+
+@responses.activate
 def test_agents_publish(rymi_client):
     base = "https://api.rymi.live/v1"
     responses.add(responses.POST, f"{base}/agents/a-1/publish", json={"published": True})
