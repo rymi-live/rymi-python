@@ -95,3 +95,9 @@ class TelephonyResource:
         """
         payload: Dict[str, Any] = {"agent_id": agent_id}
         return self.client.post("/telephony/line/activate", json=payload)
+
+    def release_line(self) -> Dict[str, Any]:
+        """Release the line's number back to the carrier and stop its monthly rental.
+        Final: the same number can't be recovered. A line still setting up is cancelled.
+        """
+        return self.client.post("/telephony/line/release", json={})

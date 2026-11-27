@@ -201,6 +201,15 @@ def test_activate_line(rymi_client):
 
 
 @responses.activate
+def test_release_line(rymi_client):
+    base = "https://api.rymi.live/v1"
+    responses.add(responses.POST, f"{base}/telephony/line/release", json={"ok": True, "released_number": "+14155550102"})
+    out = rymi_client.telephony.release_line()
+    assert out["released_number"] == "+14155550102"
+    assert json.loads(responses.calls[-1].request.body) == {}
+
+
+@responses.activate
 def test_agents_publish(rymi_client):
     base = "https://api.rymi.live/v1"
     responses.add(responses.POST, f"{base}/agents/a-1/publish", json={"published": True})

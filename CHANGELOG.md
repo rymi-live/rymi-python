@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `rymi.telephony.release_line()` releases your Rymi number and stops its rental.
 - `rymi.telephony.activate_line(agent_id)` buys your Rymi line's number, attaches it to a published agent and charges the first month from credits.
 
 ## 1.14.0
