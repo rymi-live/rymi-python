@@ -86,15 +86,12 @@ class TelephonyResource:
             payload["submit"] = submit
         return self.client.post("/telephony/line/kyc", json=payload)
 
-    def activate_line(self, agent_id: str, replace_carrier: Optional[bool] = None) -> Dict[str, Any]:
+    def activate_line(self, agent_id: str) -> Dict[str, Any]:
         """Buy the line's number, attach it to a published agent and charge the first
         month from credits.
 
         India lines whose KYC is still in review return ``{"waiting_for_kyc": True}``
-        and activate once verification is approved. Pass ``replace_carrier=True`` to
-        switch off a carrier you connected yourself.
+        and activate once verification is approved.
         """
         payload: Dict[str, Any] = {"agent_id": agent_id}
-        if replace_carrier is not None:
-            payload["replace_carrier"] = replace_carrier
         return self.client.post("/telephony/line/activate", json=payload)
